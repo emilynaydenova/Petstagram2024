@@ -16,7 +16,7 @@ from django.contrib.auth import get_user_model
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+# points where manage.py is
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -27,7 +27,10 @@ SECRET_KEY = "django-insecure----ax#xd_7ezs+$weer-8fe#410wi5zs3wzd#i$!*j0j-q41#s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost'
+]
 
 
 # Application definition
@@ -133,10 +136,15 @@ STATICFILES_DIRS = (
     BASE_DIR / 'static',
 )
 
+# MEDIA_URL is the URL we can use in our templates for the files
+MEDIA_URL = 'media/'
+# MEDIA_ROOT is the absolute filesystem path to the directory for user-uploaded files
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # AUTH_USER_MODEL = 'accounts.CustomUser'
-UserModel = get_user_model()
+# UserModel = get_user_model()

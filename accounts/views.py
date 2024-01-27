@@ -1,22 +1,31 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 # Create your views here.
 def register(request):
-    pass
+    context = {}
+    return render(request, "accounts/register-page.html", context)
 
 
 def login(request):
-    pass
+    context = {}
+    return render(request, "accounts/login-page.html", context)
 
 
-def show_profile_details(request, pk):
-    pass
+def logout(request):
+    return redirect('home')
+
+def show_profile(request, pk):
+    context = {}
+    return render(request, "accounts/profile-details-page.html", context)
 
 
 def edit_profile(request, pk):
-    pass
+    context = {}
+    return render(request, "accounts/profile-edit-page.html", context)
 
 
 def delete_profile(request, pk):
-    pass
+    context = {}
+    return render(request, "accounts/profile-delete-page.html", context)
+

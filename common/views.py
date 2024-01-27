@@ -1,5 +1,11 @@
 from django.shortcuts import render
 
+from photos.models import Photo
+
+
 # Create your views here.
 def index(request):
-    return render(request,'common/home-page.html')
+    context = {
+        "photos": Photo.objects.all()
+    }
+    return render(request,'common/home-page.html',context)
