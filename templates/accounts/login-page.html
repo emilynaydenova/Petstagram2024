@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 
-{% block content %}
-<!-- Starts Main Section -->
-<main>
+{% block page_title %}
+    Login
+{% endblock page_title %}
 
-    <!-- Start Login Section-->
+<!-- Start Login Section-->
+{% block content %}
     <div class="login-register-div">
         <div class="login-register-box">
             <h1>Petstagram</h1>
 
             <!-- Start Login Form-->
-            <form action="{% url 'login' %}">
+            <form action="{% url 'login_user' %}">
                 <p>
                     <label for="id_username">Username:</label>
                     <input type="text" placeholder="Username">
@@ -32,8 +33,4 @@
             <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
         </div>
     </div>
-    <!-- End Login Section-->
-
-</main>
-<!-- End Main Section -->
- {% endblock content %}
+{% endblock content %}

@@ -1,9 +1,11 @@
  {% extends "base.html" %}
- {% block content %}
 
-<!-- Starts Main Section -->
-<main>
-    <!-- Start Edit Profile Section -->
+{% block page_title %}
+    Profile edit
+{% endblock page_title %}
+
+<!-- Start Edit Profile Section -->
+{% block content %}
     <div class="edit-delete">
         <h2>Edit Profile</h2>
         <!-- Start Edit Profile From -->
@@ -59,8 +61,4 @@
         <!-- End Edit Profile Form -->
 
     </div>
-    <!-- End Edit Profile Section -->
-
-</main>
-<!-- End Main Section -->
 {% endblock content %}

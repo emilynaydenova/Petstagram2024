@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+    
+{% block page_title %}
+    Pet delete
+{% endblock page_title %}
+
+<!-- Starts Delete Pet Section -->
 {% block content %}
-<!-- Starts Main Section -->
-<main>
-    <!-- Starts Delete Pet Section -->
-    <div class="edit-delete edit-photo">
+     <div class="edit-delete edit-photo">
         <h2>Delete pet</h2>
         <!-- Starts Delete Pet Form -->
         <form action="#">
@@ -30,8 +33,4 @@
         </form>
         <!-- End Delete Pet Form -->
     </div>
-    <!-- End Delete Pet Section -->
-</main>
-<!-- End Main Section -->
-
 {% endblock content %}

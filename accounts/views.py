@@ -1,3 +1,4 @@
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 
 
@@ -7,12 +8,13 @@ def register(request):
     return render(request, "accounts/register-page.html", context)
 
 
-def login(request):
+def login_view(request):
     context = {}
     return render(request, "accounts/login-page.html", context)
 
 
-def logout(request):
+def logout_view(request):
+    logout(request)
     return redirect('home')
 
 def show_profile(request, pk):

@@ -1,0 +1,57 @@
+{% load static %} 
+<header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <!-- Link to Home Page -->
+                <a href="{% url "home" %}">
+                    <img width="50px" src="{% static "images/free-30-instagram-stories-icons23_122570.png"%}"  alt="img1" >
+                </a>
+
+                <!-- Link to Home Page -->
+                <a class="home" href="{% url 'home' %}">
+                    <i>Petstagram</i>
+                </a>
+            </div>
+
+            <div class="nav-links">
+                <ul class="nav-group">
+                    <li class="nav-item">
+
+                        <!-- Link to Add Pet Page -->
+                        <a href="{% url 'add_pet' %}">
+                            <i>Add Pet</i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+
+                        <!-- Link to Add Photo Page -->
+                        <a href="{% url 'add_photo'%}">
+                            <i>Add Photo</i>
+                        </a>
+                    </li>
+                 
+                    {% if not request.user.is_authenticated %}
+                        <!-- Link to Login Page -->
+                        <li class="nav-item">
+                            <a href="{% url "login_user" %}"><i>Login</i></a>
+                        </li>
+                         <!-- Link to Register Page -->
+                        <li class="nav-item">
+                            <a href="{% url "register" %}"><i>Register</i></a>
+                        </li>
+                    {% else %}
+                        <!-- Link to Profile Page -->
+                        <li class="nav-item">
+                            <a href="{%url 'profile_show' pk=1 %}"><i>Profile</i></a>
+                         </li>
+                       <!-- Lpg out -->
+                        <li class="nav-item">
+                            <a href="{% url "logout_user" %}"><i>Log out</i></a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

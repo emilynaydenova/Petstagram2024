@@ -26,3 +26,13 @@ class MaxFileSizeValidator(BaseValidator):
 
     def compare(self, file_size, max_size):
         return max_size < file_size
+
+
+class FileSizeValidator:
+    def __init__(self, max_file_size):
+        self.max_file_size = max_file_size
+
+    def __call__(self, value):
+        if value.size > self.max_file_size:
+            raise ValidationError(f"The size of the file should be less that {self.max_file_size} ")
+

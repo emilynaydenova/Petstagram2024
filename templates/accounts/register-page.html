@@ -1,9 +1,12 @@
  {% extends "base.html" %}
- {% block content %}
-<!-- Starts Main Section -->
-<main>
 
-    <!-- Start Register Section -->
+     
+ {% block page_title %}
+     Register
+ {% endblock page_title %}    
+ 
+<!-- Start Register Section -->
+{% block content %}
     <div class="login-register-div">
         <div class="login-register-box">
             <h1>Petstagram</h1>
@@ -27,11 +30,8 @@
         <div class="second-option">
 
             <!-- Link to Login Page -->
-            <p>Have an account? <a href="#">Log in</a></p>
+            <p>Have an account? <a href="{% url 'login_user' %}">Log in</a></p>
         </div>
     </div>
     <!-- End Register Section -->
-
-</main>
-<!-- End Main Section -->
  {% endblock content %}

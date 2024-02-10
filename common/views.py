@@ -8,4 +8,4 @@ def index(request):
     context = {
         "photos": Photo.objects.all()
     }
-    return render(request,'common/home-page.html',context)
+    return render(request, 'common/home-page.html', context)
