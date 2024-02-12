@@ -56,6 +56,9 @@ class Comment(models.Model):
 
     # user = models.ForeignKey(User)
 
+    class Meta:
+        ordering = ["date_time_of_publication"]
+
 
 class Like(models.Model):
     to_photo = models.ForeignKey(
@@ -64,3 +67,5 @@ class Like(models.Model):
     )
 
     # user = models.ForeignKey(User)
+
+# like = Like.objects.filter(photo_id=pet_photo.pk,user=request.user)
