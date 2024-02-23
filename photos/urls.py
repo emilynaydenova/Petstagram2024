@@ -1,13 +1,15 @@
 from django.urls import path, include
 
-from photos.views import add_photo, photo_details, photo_edit, photo_delete
+from common.views import AddCommentView
+from photos.views import  CreatePhotoView, PhotoDetailsView, PhotoEditView, PhotoDeleteView
 
 urlpatterns = [
-    path('add/', add_photo, name='add_photo'),
+    path('add/', CreatePhotoView.as_view(), name='add_photo'),
     path('<int:pk>/',
          include([
-             path('', photo_details, name='photo_details'),
-             path('edit/', photo_edit, name='photo_edit'),
-             path('delete/', photo_delete, name='photo_delete'),
+             path('', PhotoDetailsView.as_view(), name='photo_details'),
+             path('edit/', PhotoEditView.as_view(), name='photo_edit'),
+             path('delete/', PhotoDeleteView.as_view(), name='photo_delete'),
+             path('comment/',AddCommentView.as_view(), name='add comment')
          ])),
 ]

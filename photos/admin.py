@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from photos.models import Photo, Comment, Like
+from photos.models import Photo
 
 
 # Register your models here.
@@ -24,11 +24,4 @@ class PhotoAdmin(admin.ModelAdmin):
 
     # def link_to_pet(self,obj):
     #     return f'<a href="/">{obj.name}</a> '
-@admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
-    pass
 
-
-@admin.register(Like)
-class LikeAdmin(admin.ModelAdmin):
-    pass

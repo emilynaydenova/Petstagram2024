@@ -13,11 +13,7 @@
         <form action="{% url 'add_pet' %}" method="post">
             {{ form.as_p }}
             {% csrf_token %}
-         
-            <!-- Add Pet Button -->
             <button class="add-btn" type="submit">Add Pet</button>
         </form>
-        <!-- End Add Pet Form -->
-
-    </div>
+     </div>
 {% endblock content %}

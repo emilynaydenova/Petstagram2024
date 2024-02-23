@@ -1,3 +1,4 @@
+{# include in home-page.html #}
 {% load static %}
  
 {% for photo in photo_list %}
@@ -5,8 +6,9 @@
         <!-- Start User Details and Image Location -->
         <div class="top">
             <div class="userDetails">
+            
                 <!-- Link to User Profile Page -->
-                <a href="{% url 'profile_show' pk=request.user.pk %}">
+                <a href="{% url 'profile_show' pk=1 %}">
                     <div class="profilepic">
                         <div class="profile_img">
                             <div class="image">
@@ -19,14 +21,23 @@
                         </div>
                     </div>
                 </a>
+          
                 <h3>
+            {% if user %}
                     <!-- Link to User Profile Page -->
-                    <a href="{% url 'profile_show' pk=request.user.pk %}">
+                    <a href="{% url 'profile_show' pk=user.pk %}">
+                        {% if user.first_name or user.last_name %}
                         <!-- if user has first name and last name -->
-                        Emily Naydenova
+                        {{ user.first_name }} {{ user.last_name }}
                         <!-- else -->
+                        {% else %}    
+                        {{ user.username }}                            
                         <!-- show user username -->
+                        {% endif %}    
                     </a>
+            {% else %}
+                    Anonymous
+            {% endif %}        
                     <br>
                     <!-- if the photo has location -->
                     <span>{{ photo.location }}</span>
@@ -78,7 +89,7 @@
             <h6>Tagged pets:</h6>
             {%  for pet in photo.tagged_pets.all %}
             <!-- Link to  Tagged Pet Details Page-->
-                <a href="{% url 'pet_details' username=request.user.username pet_slug=pet.slug %}">
+                <a href="{% url 'pet_details' username=user.username pet_slug=pet.slug %}">
                     <p class="message"><b>{{ pet.name }}</b></p>
                 </a>
             {% endfor %}
@@ -97,10 +108,12 @@
             <div class="addComments">
 
                 <!-- Start Add Comments Form -->
-                <form method="post" action="#">
-                    <label for="id_body">Body:</label>
-                    <textarea name="body" cols="40" rows="10" placeholder="Add comment..." maxlength="300"
-                              required="" id="id_body"></textarea>
+                <form method="post" action="">
+                    {{ comment_form }}
+                    {% csrf_token %}
+{#                    <label for="id_body">Body:</label>#}
+{#                    <textarea name="body" cols="40" rows="10" placeholder="Add comment..." maxlength="300"#}
+{#                              required="" id="id_body"></textarea>#}
                     <button type="submit">Post</button>
                 </form>
                 <!-- End Add Comments Form -->

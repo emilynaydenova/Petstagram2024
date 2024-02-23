@@ -1,50 +1,60 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 
+from common.forms import CommentForm
 from photos.forms import PhotoForm, PhotoEditForm
 from photos.models import Photo
+from django.views import generic as views
 
 
 # Create your views here.
-def add_photo(request):
-    form = PhotoForm(request.POST or None, request.FILES)
-    if form.is_valid():
-        photo = form.save()
-        return redirect('photo_details', pk=photo.pk)
 
-    context = {
-        'form': form,
-    }
+class CreatePhotoView(views.CreateView):
+    form_class = PhotoForm
+    template_name = "photos/photo-add-page.html"  # default is "pets/pet_form.html
+    context_object_name = "pet"
 
-    return render(request, "photos/photo-add-page.html", context)
-
-
-def photo_details(request, pk):
-    context = {
-        'photo': Photo.objects.get(pk=pk),
-    }
-    return render(request, "photos/photo-details-page.html", context)
+    def get_success_url(self):
+        return reverse_lazy("photo_details", kwargs={
+            'pk': self.object.pk
+        })
 
 
-def photo_edit(request, pk):
-    photo = get_object_or_404(Photo, pk=pk)
+class PhotoDetailsView(views.DetailView):
+    queryset = Photo.objects.all() \
+        .prefetch_related("comment_set") \
+        .prefetch_related("like_set") \
 
-    if request.method == 'POST':
-        form = PhotoEditForm(request.POST, request.FILES, instance=photo)
-        if form.is_valid():
-            form.save()
+    template_name = "photos/photo-details-page.html"
+    context_object_name = 'photo'
 
-            return redirect('photo_details', pk)
-    else:
-        form = PhotoEditForm(instance=photo)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        context['comment_form'] = CommentForm()
+        return context
 
-    context = {
-        'photo': photo,
-        'form': form,
-    }
-    return render(request, "photos/photo-edit-page.html", context)
+
+class PhotoEditView(views.UpdateView):
+    model = Photo  # or queryset  - because must have self.object
+    form_class = PhotoEditForm
+    template_name = "photos/photo-edit-page.html"
+    context_object_name = 'photo'
+
+    def get_success_url(self):
+        return reverse_lazy('photo_details',
+                            kwargs={"pk": self.object.pk})
 
 
 def photo_delete(request, pk):
     photo = get_object_or_404(Photo, pk=pk)
     photo.delete()
     return redirect('home')
+
+class PhotoDeleteView(views.DeleteView):
+    model = Photo
+    fields = '__all__'
+    # TODO
+    success_url = reverse_lazy('home')
+
+

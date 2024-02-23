@@ -1,3 +1,13 @@
 from django.contrib import admin
 
-# Register your models here.
+from common.models import Comment, Like
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Like)
+class LikeAdmin(admin.ModelAdmin):
+    pass

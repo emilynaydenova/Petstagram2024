@@ -10,8 +10,9 @@
     <div class="container">
         <div class="col-9">
             <div class="card">
-                <div class="top">
-
+               
+{#  Top of the Photo#}
+                 <div class="top">
                     <!-- Start User Details and Image Location Section -->
                     <div class="userDetails">
 
@@ -28,11 +29,13 @@
                         <h3>
 
                             <!-- Link to User Profile Details Page -->
-                            <a href="{% url 'profile_show' pk=1 %}">
+                            <a href="{% url 'profile_show' pk=user.pk %}">
                                 <!-- IF user has first name and last name -->
-                                Emily Naydenova
-                                <!-- else -->
-                                <!-- show user username -->
+                                {% if user.first_name or user.last_name %}
+                                     {{ user.first_name }} {{ user.last_name}}
+                                {% else %}
+                                    {{ user.username }}
+                                {% endif %}
                             </a>
                             <br>
 
@@ -68,97 +71,92 @@
                 </div>
                 <!-- End Pet Photo -->
 
-                <div class="bottom">
+                             
+{# Action Buttons ------------------------------------------------------------------------ #}
+           <div class="bottom">
+              
+            <div class="actionBtns">
+                <div class="left">
+                    <!-- Start Like Button -->
+                    <span class="heart">
+                        <a href="{% url 'like_photo' pk=photo.pk %}">
+                           {% if photo.like_set.count > 0 %} 
+                            <!-- if user has liked the photo -->
+                            <i class="fa-solid fa-heart" style="color: #ed4040;"></i>
+                            <!-- else -->
+                            {% else %}
+                             <i class="fa-regular fa-heart"></i></a>
+                            {% endif %}
+                         </a>
+                    </span>
+                    <!-- End Like Button -->
 
-                    <!-- Start Like and Share Buttons Section -->
-                    <div class="actionBtns">
-                        <div class="left">
+                    <!-- Start Share Button -->
+                    <a href="#">
+                        <i class="fa-solid fa-share"></i>
+                    </a>
+                    <!-- End Share Button -->
 
-                            <!-- Start Like Button -->
-                            <span class="heart">
-
-                                    <!-- Link to Like Path -->
-                                    <a href="#">
-                                        <!-- if user has liked the photo -->
-                                        <!-- <i class="fa-solid fa-heart" style="color: #ed4040;"></i> -->
-                                        <!-- else -->
-                                        <i class="fa-regular fa-heart"></i>
-                                    </a>
-                            </span>
-                            <!-- End Like Button -->
-
-                            <!-- Start Share  Button -->
-
-                            <!-- Link to Share Path -->
-                            <a href="#">
-                                <i class="fa-solid fa-share"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- End Like and Share Buttons Section -->
-
-                    <!-- Number of Likes for the Photo -->
-                    <p class="likes">203 likes</p>
-
-                    <!-- Start Tagged Pets Section-->
-                   {%  for pet in photo.tagged_pets.all %}
-                       <a href="{% url 'pet_details' username=request.user.username pet_slug=pet.slug %}">
-                    <p class="message"><b>{{ pet.name }}</b></p>
-                      </a>
-                   {% endfor %}
-                    <!-- End Tagged Pets Section-->
-
-                    <!-- Photo description -->
-                    <p class="pet-details">{{ photo.description}}</p>
-
-                    <!-- Date of Publication or edit of the Photo -->
-                    <h5 class="postTime">{{ photo.date_of_publication|date:"d/m/Y"}}</h5>
-
-                    <!-- Start Comments Section -->
-    
-                    <div class="comments">
-                                  <h6>Comments:</h6>
-                        <div class="top">
-                            <div class="userDetails">
-                                <div class="comment-data">
-                                    <div class="profilepic">
-                                        <div class="profile_img">
-                                            <div class="image">
-                                                <!-- User Profile Image -->
-                                                <img src="/static/images/person.png" alt="img8">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p>
-                                        <!-- Link to User Profile Details Page-->
-                                        <!-- User First and/or Last Name or username-->
-                                        <a href="">Steven Ivanov</a>
-                                        <!-- User Comment -->
-                                        - OMG where can i get one
-                                    </p>
-                                </div>
-                                  
-                                <span>Sept. 20, 2022, 5:02 p.m.</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Comments Section -->
                 </div>
+            </div>
+            <!-- End Like and Share Buttons -->
+
+            <!-- Number of Likes per Photo -->
+            <p class="likes">{{ photo.like_set.count }} likes</p>
+
+
+            <!-- Start Tagged Pets -->
+            <h6>Tagged pets:</h6>
+            {%  for pet in photo.tagged_pets.all %}
+            <!-- Link to  Tagged Pet Details Page-->
+                <a href="{% url 'pet_details' username=user.username pet_slug=pet.slug %}">
+                    <p class="message"><b>{{ pet.name }}</b></p>
+                </a>
+            {% endfor %}
+            
+            <!-- End Tagged Pets -->
+
+            <!-- Link to Photo Details Page -->
+            <a href="{% url 'photo_details' pk=photo.pk %}">
+                <h4 class="details">See photo details</h4>
+            </a>
+
+            <!-- Date of Publication -->
+            <h5 class="postTime">{{ photo.date_of_publication|date:"d/m/Y"}}</h5>
+
+            <!-- Start Add Comments Section -->
+            <div class="addComments">
+
+                <!-- Start Add Comments Form -->
+{#                <form method="post" action="{% url "add comment" %} ">#}
+{#                    {{ comment_form }}#}
+{#                    {% csrf_token %}#}
+{#                    <label for="id_body">Body:</label>#}
+{#                    <textarea name="body" cols="40" rows="10" placeholder="Add comment..." maxlength="300"#}
+{#                              required="" id="id_body"></textarea>#}
+{#                    <button type="submit">Post</button>#}
+{#                </form>#}
+                <!-- End Add Comments Form -->
+
+            </div>
+            <!-- End Add Comments Section -->
+
+        </div>
 
                 <!-- Start Add Comments Section -->
-                <div class="addComments">
-
-                    <!-- Start Add Comments Form -->
-                    <form method="post" action="#">
-                        <label for="id_body">Body:</label>
-                        <textarea name="body" cols="40" rows="10" placeholder="Add comment..." maxlength="300"
-                                  required="" id="id_body"></textarea>
-                        <!-- Post Comments Button -->
-                        <button type="submit">Post</button>
-                    </form>
-                    <!-- End Add Comments Form -->
-
-                </div>
+{#                <div class="addComments">#}
+{##}
+{#                    <!-- Start Add Comments Form -->#}
+{#                    <form method="post" action="#">#}
+{#                        <label for="id_body">Body:</label>#}
+{#                        <textarea name="body" cols="40" rows="10" placeholder="Add comment..." maxlength="300"#}
+{#                                  required="" id="id_body"></textarea>#}
+{#                        <!-- Post Comments Button -->#}
+{#                        <button type="submit">Post</button>#}
+{#                    </form>#}
+{#                    <!-- End Add Comments Form -->#}
+{##}
+{#                </div>#}
                 <!-- End Add Comments Section -->
 
             </div>
