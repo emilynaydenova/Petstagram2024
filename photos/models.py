@@ -1,9 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 
 from pets.models import Pet
 from photos.validators import ValidateFileMaxSizeInMb
 
+UserModel = get_user_model()
 
 class Photo(models.Model):
     IMAGE_MAX_SIZE_MB = 5
@@ -40,4 +42,7 @@ class Photo(models.Model):
 
     date_of_publication = models.DateField(auto_now=True)
 
-
+    user = models.ForeignKey(
+        to=UserModel,
+        on_delete=models.RESTRICT,
+    )

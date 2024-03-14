@@ -1,4 +1,5 @@
 {% load static %} 
+
 <header>
     <nav class="navbar">
         <div class="container">
@@ -43,15 +44,25 @@
                     {% else %}
                         <!-- Link to Profile Page -->
                         <li class="nav-item">
-                            <a href="{%url 'profile_show' pk=1 %}"><i>Profile</i></a>
+                            <a href="{%url 'profile_show'  request.user.pk %}"><i>Profile</i></a>
                          </li>
-                       <!-- Lpg out -->
-                        <li class="nav-item">
-                            <a href="{% url "logout_user" %}"><i>Log out</i></a>
-                        </li>
+                       <!-- Log out -->
+                        
+                           <li class="nav-item"> 
+                         <form id="logout-form" action="{% url 'logout_user' %}" method="post">
+                            {% csrf_token %}
+                             <a class="nav-item" href="{% url 'logout_user' %}" id="logout-link"><i>Logout</i></a>
+                         </form>   
+                          </li>
                     {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
+    <script>
+        document.getElementById('logout-link').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the link from navigating
+            document.getElementById('logout-form').submit(); // Submit the form
+        });
+    </script>
 </header>

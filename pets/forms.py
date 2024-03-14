@@ -26,6 +26,7 @@ class PetForm(forms.ModelForm):
         }
 
 
+
 class PetEditForm(PetForm, ReadonlyDisabledFieldsMixin):
     readonly_fields = ('date_of_birth',)
 

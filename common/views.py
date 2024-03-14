@@ -14,7 +14,7 @@ class IndexView(views.ListView):
     template_name = 'common/home-page.html'
     context_object_name = 'photos'
 
-    paginate_by = 1   # <- ->
+    paginate_by = 3   # <- ->
     # or def get_paginate_by(self,queryset)
     @property
     def pet_name_pattern(self):
@@ -40,15 +40,4 @@ class IndexView(views.ListView):
         return context
 
 
-# pk of the photo
-def like_photo(request, pk):
-    photo_like = Like.objects.filter(to_photo_id=pk).first()  # ,user=request.user)
-    if photo_like:
-        # dislike
-        photo_like.delete()
-    else:
-        Like.objects.create(to_photo_id=pk)
-    return redirect(request.META['HTTP_REFERER'] + f'#photo-{pk}')
 
-class AddCommentView(views.CreateView):
-    model = Comment
